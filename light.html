@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strange Sessions | Original research on what comes next</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #ffffff;
+            --paper: #fafaf8;
+            --chalk: #f2f0ec;
+            --charcoal: #2c2c2c;
+            --charcoal-light: #4a4a4a;
+            --grey: #8a8a8a;
+            --grey-light: #b8b8b8;
+            --green: #7ab8a0;
+            --green-pale: rgba(122, 184, 160, 0.08);
+            --green-rule: rgba(122, 184, 160, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--charcoal-light);
+            -webkit-font-smoothing: antialiased;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 300; text-wrap: balance; }
+
+        p { text-wrap: pretty; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+        .container-narrow { max-width: 720px; margin: 0 auto; padding: 0 48px; }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--chalk);
+        }
+        nav .inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 48px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        nav .logo {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+        }
+        nav a.nav-link {
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--grey);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav a.nav-link:hover { color: var(--charcoal); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: 'S';
+            position: absolute;
+            font-family: 'Source Serif 4', serif;
+            font-size: 60vw;
+            font-weight: 300;
+            color: var(--green);
+            opacity: 0.06;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            pointer-events: none;
+            line-height: 1;
+        }
+        .hero-inner { max-width: 800px; padding: 0 48px; position: relative; z-index: 1; }
+        .hero .overline {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 40px;
+        }
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 72px);
+            line-height: 1.08;
+            color: var(--charcoal);
+            margin-bottom: 32px;
+            letter-spacing: -0.01em;
+        }
+        .hero h1 span { color: var(--grey); }
+        .hero .subtitle {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 21px;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--grey);
+            max-width: 580px;
+            margin: 0 auto 48px;
+        }
+        .hero .meta {
+            font-size: 13px;
+            color: var(--grey);
+            margin-top: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--charcoal);
+            color: var(--white);
+            padding: 16px 48px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { background: var(--green); }
+        .btn-secondary {
+            display: inline-block;
+            border: 1px solid var(--grey-light);
+            color: var(--charcoal);
+            padding: 16px 48px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+        section {
+            padding: 120px 0;
+            border-top: 1px solid var(--chalk);
+        }
+        .section-overline {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 32px;
+        }
+        section h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.15;
+            color: var(--charcoal);
+            margin-bottom: 24px;
+        }
+
+        .question-section { background: var(--paper); }
+        .question-section h2 { font-size: clamp(32px, 5vw, 52px); }
+
+        .prose {
+            font-size: 16px;
+            line-height: 1.85;
+            color: var(--charcoal-light);
+        }
+        .prose p { margin-bottom: 20px; }
+        .prose .highlight { color: var(--charcoal); }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+        .three-col .col h3 {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--green-rule);
+        }
+        .three-col .col p {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 48px;
+        }
+        .card h3 {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+        }
+        .card p {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+        .team-card h3 {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+        .team-card .role {
+            font-size: 13px;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+        .team-card p {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .join-section { background: var(--paper); }
+        .join-section .price {
+            font-family: 'Source Serif 4', serif;
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+        .join-section .price-meta {
+            font-size: 15px;
+            color: var(--grey);
+            margin-bottom: 8px;
+        }
+        .join-section .price-note {
+            font-size: 13px;
+            color: var(--grey);
+            margin-bottom: 48px;
+        }
+        .btn-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--chalk);
+            text-align: center;
+        }
+        footer p {
+            font-size: 12px;
+            color: var(--grey-light);
+        }
+
+        @media (max-width: 768px) {
+            .container, .container-narrow, nav .inner, .hero-inner {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+            .three-col, .card-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+            section { padding: 80px 0; }
+            .btn-row { flex-direction: column; align-items: center; }
+        }
+
+        a.text-link {
+            color: var(--grey);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a.text-link:hover { color: var(--green); }
+
+        .rule {
+            width: 60px;
+            height: 2px;
+            background: var(--green);
+            opacity: 0.3;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="inner">
+            <div class="logo">Strange Sessions</div>
+            <a href="#join" class="nav-link">Join the Inaugural Session</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-inner">
+            <p class="overline">Inaugural Session &mdash; May 21, 2026</p>
+            <h1>
+                How is AI redesigning<br>
+                <span>organisations?</span>
+            </h1>
+            <p class="subtitle">
+                The transformation is already underway. The playbook has not yet been written.
+            </p>
+            <a href="#join" class="btn-primary">Become a founding member</a>
+            <p class="meta">$499 per session</p>
+        </div>
+    </header>
+
+    <!-- The Question -->
+    <section class="question-section">
+        <div class="container-narrow" style="text-align: center;">
+            <p class="section-overline">The Question</p>
+            <h2>Work is being reimagined.</h2>
+            <div class="rule" style="margin: 32px auto;"></div>
+        </div>
+        <div class="container-narrow prose" style="margin-top: 8px;">
+            <p>
+                Leaders are experiencing what it means to work and lead in organisations where <span class="highlight">intelligence is now distributed</span>, where the capability to build is in the hands of many, and where the roles and functions once thought permanent are now being quietly rewritten.
+            </p>
+            <p>
+                <span class="highlight">In our inaugural session, we are inviting leaders whose day jobs now include understanding what this means</span> &mdash; for their people, the systems they operate in, and the outcomes they are accountable for.
+            </p>
+        </div>
+    </section>
+
+    <!-- Strange Sessions -->
+    <section>
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 24px;">
+                <p class="section-overline">Strange Sessions</p>
+                <h2>A series of convenings where we answer the questions that matter.</h2>
+            </div>
+            <div class="container-narrow prose" style="text-align: center; margin-bottom: 64px;">
+                <p>
+                    Strange Sessions run throughout the year, each one built around a single question worth answering well. We interview practitioners and experts. We seek inspiration from other fields, gather primary evidence, and synthesise what we find into something you can act on. We share what we learn in our sessions.
+                </p>
+            </div>
+            <div class="three-col">
+                <div class="col">
+                    <h3>Discovery</h3>
+                    <p>In the weeks before each session, we go deep on one question. We start our research and surface the early patterns that have not yet made it into the mainstream conversation.</p>
+                </div>
+                <div class="col">
+                    <h3>Synthesis</h3>
+                    <p>We distil what we find into original, proprietary intelligence. A clear-eyed read on what is actually happening, grounded in evidence, shaped by practitioners, and designed to be immediately useful.</p>
+                </div>
+                <div class="col">
+                    <h3>Convening</h3>
+                    <p>We share our findings with the room, bring in a practitioner who is living the work, and then open it up. Curated breakout groups. Facilitated conversation. The kind of exchange that only happens when you put the right people around the same question.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Leave With -->
+    <section style="background: var(--paper);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 64px;">
+                <p class="section-overline">What You Leave With</p>
+                <h2>Signal, not noise.</h2>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Proprietary research</h3>
+                    <p>Original findings on how organisations are restructuring around AI. The patterns, the case studies, the failures and the successes. Packaged for you to act on.</p>
+                </div>
+                <div class="card">
+                    <h3>A curated room</h3>
+                    <p>Leaders who are navigating the same shift. Not AI specialists. People leading teams, departments, and divisions through a transformation they did not train for. The conversations that happen in this room do not happen anywhere else.</p>
+                </div>
+                <div class="card">
+                    <h3>A design-led approach</h3>
+                    <p>We are three former IDEO leaders. We approach each session as we would a project: challenge-driven, evidence-based, human-centred, and built to generate the kind of insight that changes how you think about the problem.</p>
+                </div>
+                <div class="card">
+                    <h3>A private brief</h3>
+                    <p>A take-home memo synthesising the research, the key findings, and the discussion. Something concrete you can bring back to your organisation the next morning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Are -->
+    <section>
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 16px;">
+                <p class="section-overline">Who We Are</p>
+                <h2>Built at the intersection of design, technology, and scale.</h2>
+            </div>
+            <p style="text-align: center; max-width: 560px; margin: 0 auto 64px; font-size: 15px;">
+                We have spent our careers helping organisations navigate paradigm shifts. At IDEO, at venture firms, inside enterprises. This is what we do.
+            </p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <h3>Tara Tan</h3>
+                    <p class="role">Co-Founder</p>
+                    <p>Founding Partner, IDEO CoLab Ventures. Now Managing Partner at Strange Ventures, investing in frontier infrastructure and computing. Author of The Strange Review.</p>
+                </div>
+                <div class="team-card">
+                    <h3>Sandeep Pahuja</h3>
+                    <p class="role">Co-Founder</p>
+                    <p>Former IDEO. Venture investor and operator. Teaching at Haas School of Business, UC Berkeley. Connects what startups are building to what enterprises need.</p>
+                </div>
+                <div class="team-card">
+                    <h3>David Beath</h3>
+                    <p class="role">Co-Founder</p>
+                    <p>Former IDEO, Capital One, DBS Bank. Two decades translating between design, technology, and the enterprise. Now coaching leaders through AI transformation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join -->
+    <section class="join-section" id="join">
+        <div class="container-narrow" style="text-align: center;">
+            <p class="section-overline">Inaugural Session &mdash; May 21, 2026</p>
+            <div class="price">$499</div>
+            <p class="price-meta">per session Â· 90 minutes Â· virtual</p>
+            <p class="price-note">Limited to thirty seats. Founding members receive priority access to all future sessions.</p>
+            <div class="btn-row">
+                <a href="https://lu.ma/strange-people" class="btn-primary">Register on Luma</a>
+                <a href="https://buy.stripe.com/strange-people-founding" class="btn-secondary">Founding member waitlist</a>
+            </div>
+            <p style="font-size: 13px;">
+                Questions? <a href="mailto:david@thisisluminary.co" class="text-link">david@thisisluminary.co</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Strange Sessions. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
